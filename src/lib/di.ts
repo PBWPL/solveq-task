@@ -1,15 +1,13 @@
-import mysql from "mysql2";
-import { Config } from "../config/config";
-import { initDb } from "./db";
+import mysql from 'mysql2';
+import { Config } from '../config/config';
+import { initDb } from './db';
 
 export type AppDependencies = {
   db: mysql.Connection;
   config: Config;
 };
 
-async function createDependencyContainer(
-  config: Config
-): Promise<AppDependencies> {
+async function createDependencyContainer(config: Config): Promise<AppDependencies> {
   let db: ReturnType<typeof initDb>;
 
   const module = {
@@ -19,7 +17,7 @@ async function createDependencyContainer(
       }
       return db;
     },
-    config,
+    config
   };
   return module;
 }

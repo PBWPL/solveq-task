@@ -11,11 +11,7 @@ export type Config = {
   };
 };
 
-const defaultTo = <T>(
-  value: any,
-  defaultValue: T,
-  possibleValues: T[] = []
-): T => {
+const defaultTo = <T>(value: any, defaultValue: T, possibleValues: T[] = []): T => {
   if (possibleValues.length > 0 && possibleValues.includes(value)) {
     return value;
   }
@@ -26,15 +22,15 @@ const { env } = process;
 
 const config: Config = {
   MYSQL: {
-    host: defaultTo(env.MYSQL_HOST, "db"),
+    host: defaultTo(env.MYSQL_HOST, 'db'),
     port: defaultTo(env.MYSQL_PORT, 3306),
-    user: defaultTo(env.MYSQL_USERNAME, "user"),
-    password: defaultTo(env.MYSQL_PASSWORD, "password"),
-    database: defaultTo(env.MYSQL_DATABASE, "task"),
+    user: defaultTo(env.MYSQL_USERNAME, 'user'),
+    password: defaultTo(env.MYSQL_PASSWORD, 'password'),
+    database: defaultTo(env.MYSQL_DATABASE, 'task')
   },
   HTTP: {
-    port: defaultTo(env.MYSQL_PORT, 3000),
-  },
+    port: defaultTo(env.MYSQL_PORT, 3000)
+  }
 };
 
 export default config;

@@ -1,6 +1,6 @@
-import express from "express";
+import express from 'express';
 
-import { AppDependencies } from "./lib/di";
+import { AppDependencies } from './lib/di';
 
 function serverFactory(deps: AppDependencies) {
   const { config } = deps;
