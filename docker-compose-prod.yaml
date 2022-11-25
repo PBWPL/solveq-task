@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: solveq-task-prod
+    build:
+      target: prod
+      args:
+        NODE_ENV: production
+    environment:
+      - NODE_ENV=production
+    command: npm run start

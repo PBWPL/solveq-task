@@ -10,16 +10,16 @@ services:
       - APP_MYSQL_USERNAME=user
       - APP_MYSQL_PASSWORD=password
       - APP_MYSQL_DATABASE=task
-    volumes:
-      - ./src:/app/src
-      - ./package.json:/app/package.json
     restart: always
-    command: npm run start
     ports:
       - 3000:3000
       - 9229:9229
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
+    container_name: solveq-task-db
     image: mysql/mysql-server:8.0.23
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -32,3 +32,7 @@ services:
       - ./db-data.sql:/db-data.sql
     ports:
       - 3306:3306
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 20s
+      retries: 10

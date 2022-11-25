@@ -8,6 +8,10 @@ function serverFactory(deps: AppDependencies) {
 
   const port = config.HTTP.port;
 
+  app.get('/', (req, res) => {
+    res.send('App is Running!');
+  });
+
   return app.listen(port, () => {
     console.log(`Run at port ${port}`);
   });
