@@ -11,6 +11,8 @@ function serverFactory(deps: AppDependencies) {
 
   const port = config.HTTP.port;
 
+  app.use(express.json());
+
   app.use('/', rootRouter);
 
   sequelize

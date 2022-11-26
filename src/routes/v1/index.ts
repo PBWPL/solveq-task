@@ -1,4 +1,5 @@
 import Router, { Request, Response } from 'express';
+import { verifyToken } from '../../services/verifyToken';
 import authRouter from './auth.routes';
 import locationRouter from './location.routes';
 
@@ -7,7 +8,7 @@ const rootRouter = Router();
 rootRouter.use('/auth', authRouter);
 rootRouter.use('/location', locationRouter);
 
-rootRouter.get('/locations', (req: Request, res: Response) => {
+rootRouter.get('/locations', [verifyToken], (req: Request, res: Response) => {
   res.status(200).json({ temp: '/locations' });
 });
 

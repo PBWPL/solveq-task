@@ -9,6 +9,10 @@ export type Config = {
   HTTP: {
     port: number;
   };
+  JWT: {
+    secret: string;
+    expiration: string;
+  };
 };
 
 const defaultTo = <T>(value: any, defaultValue: T, possibleValues: T[] = []): T => {
@@ -30,6 +34,10 @@ const config: Config = {
   },
   HTTP: {
     port: defaultTo(env.MYSQL_PORT, 3000)
+  },
+  JWT: {
+    secret: 'solveq-task',
+    expiration: '1h'
   }
 };
 
