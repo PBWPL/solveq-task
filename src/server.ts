@@ -3,6 +3,7 @@ import express from 'express';
 import { AppDependencies } from './lib/di';
 import { City } from './models/city.model';
 import { User } from './models/user.model';
+import rootRouter from './routes/v1';
 
 function serverFactory(deps: AppDependencies) {
   const { sequelize, config } = deps;
@@ -10,9 +11,7 @@ function serverFactory(deps: AppDependencies) {
 
   const port = config.HTTP.port;
 
-  app.get('/', (req, res) => {
-    res.send('App is Running!');
-  });
+  app.use('/', rootRouter);
 
   sequelize
     .sync({ force: process.env.NODE_ENV === 'development' })
