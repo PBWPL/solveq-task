@@ -1,4 +1,5 @@
-import { Table, Model, Column, DataType } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, BelongsToMany } from 'sequelize-typescript';
+import { User, UserCity } from './user.model';
 
 @Table({
   timestamps: false,
@@ -23,4 +24,7 @@ export class City extends Model {
     allowNull: false
   })
   coordinate!: GeoJSON.Point;
+
+  @BelongsToMany(() => User, () => UserCity)
+  users: User[];
 }
