@@ -13,6 +13,7 @@ export type Config = {
     secret: string;
     expiration: string;
   };
+  WEATHER_API: string;
 };
 
 const defaultTo = <T>(value: any, defaultValue: T, possibleValues: T[] = []): T => {
@@ -38,7 +39,8 @@ const config: Config = {
   JWT: {
     secret: 'solveq-task',
     expiration: '1h'
-  }
+  },
+  WEATHER_API: '' // TODO: add API KEY
 };
 
 export default config;
