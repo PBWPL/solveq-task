@@ -6,15 +6,23 @@
 
 1. Docker with docker compose
 
-### Preparing database
+- Add API KEY in file `config.ts`
 
-Start application using docker compose
+### Quick Start (DEVELOPMENT):
+Run script `deploy-dev.sh`
 
 ```sh
-docker compose up
+./deploy-dev.sh
 ```
 
-after application startup
+### Quick Start (PRODUCTION):
+Run script `deploy-prod.sh`
+
+```sh
+./deploy-prod.sh
+```
+
+Prepare database
 
 ```sh
 docker compose exec -T db mysql -uroot -ppassword task <db-data.sql
@@ -32,6 +40,81 @@ As your task please do the following things:
    2. GET /locations - verify user and return list of cities
    3. POST /location/:id/favorite - verify user and add city to favorites for given user
    4. GET /weather - fetch and return weather for user favorited cities, you can use any weather api you want, eg. https://openweathermap.org/api
+
+### Endpoints list
+
+| HTTP method | URI path                | Description |
+| ----------- | ----------------------- | ----------- |
+| GET         | /                       |             |
+| GET         | /locations              |             |
+| GET         | /weather                |             |
+| ---         | ---                     | ---         |
+| POST        | /auth/login             |             |
+| ---         | ---                     | ---         |
+| POST        | /location/:id/favorite  |             |
+
+---
+
+#### `GET /`
+
+| Example Request (cURL) |
+| ---------------------- |
+| `curl -Lk --X GET 'localhost:3000'` |
+
+##### Example Response (JSON):
+
+- {<br>"message": "Server is running!",<br>"success": true<br>}
+
+---
+
+#### `GET /locations`
+
+| Example Request (cURL) |
+| ---------------------- |
+| `curl -Lk -X GET 'localhost:3000/locations' -H 'Authorization: Bearer TOKEN'` |
+
+##### Example Response (JSON):
+
+- {<br>"cities": [ ... ],<br>"success": true<br>}
+
+---
+
+#### `GET /weather`
+
+| Example Request (cURL) |
+| ---------------------- |
+| `curl -Lk -X GET 'localhost:3000/weather' -H 'Authorization: Bearer TOKEN'` |
+
+##### Example Response (JSON):
+
+- {<br>"weather": [ ... ],<br>"success": true<br>}
+
+---
+
+#### `POST /auth/login`
+
+| Example Request (cURL) |
+| ---------------------- |
+| `curl -Lk -X POST 'localhost:3000/auth/login' -H 'Content-Type: application/json' --data '{"username": "user1","password": "password1"}'` |
+
+##### Example Response (JSON):
+
+- {<br>"message": "Authentication successful!"<br>"token": TOKEN<br>}
+
+---
+
+#### `POST /location/:id/favorite`
+
+| Example Request (cURL) |
+| ---------------------- |
+| `curl -Lk -X POST 'localhost:3000/location/:id/favorite' -H 'Authorization: Bearer TOKEN'` |
+
+##### Example Response (JSON):
+
+- {<br>"message": "City added!",<br>"success": true<br>}
+
+---
+
 2. We preffer to see correctly committed code, we will be very sad to see whole task commited as one commit.
 
 3. Please shortly explain why your code is easily testable. You can use an example for this.
