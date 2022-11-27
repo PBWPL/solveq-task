@@ -3,6 +3,10 @@ import config from '../config/config';
 import https from 'https';
 
 export function getWeather(lat: number, lon: number) {
+  if (process.env.NODE_ENV === 'development') {
+    return import('../test-weather.json');
+  }
+
   const apiKey = config.WEATHER_API;
   const URL = 'https://api.openweathermap.org/data/2.5/weather';
 
