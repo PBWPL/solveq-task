@@ -9,6 +9,7 @@
 - Add API KEY in file `config.ts`
 
 ### Quick Start (DEVELOPMENT):
+
 Run script `deploy-dev.sh`
 
 ```sh
@@ -16,16 +17,17 @@ Run script `deploy-dev.sh`
 ```
 
 ### Quick Start (PRODUCTION):
+
+Install packages
+
+```sh
+npm i
+```
+
 Run script `deploy-prod.sh`
 
 ```sh
 ./deploy-prod.sh
-```
-
-Prepare database
-
-```sh
-docker compose exec -T db mysql -uroot -ppassword task <db-data.sql
 ```
 
 ## Task
@@ -43,22 +45,22 @@ As your task please do the following things:
 
 ### Endpoints list
 
-| HTTP method | URI path                | Description |
-| ----------- | ----------------------- | ----------- |
-| GET         | /                       |             |
-| GET         | /locations              |             |
-| GET         | /weather                |             |
-| ---         | ---                     | ---         |
-| POST        | /auth/login             |             |
-| ---         | ---                     | ---         |
-| POST        | /location/:id/favorite  |             |
+| HTTP method | URI path               | Description |
+| ----------- | ---------------------- | ----------- |
+| GET         | /                      |             |
+| GET         | /locations             |             |
+| GET         | /weather               |             |
+| ---         | ---                    | ---         |
+| POST        | /auth/login            |             |
+| ---         | ---                    | ---         |
+| POST        | /location/:id/favorite |             |
 
 ---
 
 #### `GET /`
 
-| Example Request (cURL) |
-| ---------------------- |
+| Example Request (cURL)              |
+| ----------------------------------- |
 | `curl -Lk --X GET 'localhost:3000'` |
 
 ##### Example Response (JSON):
@@ -69,8 +71,8 @@ As your task please do the following things:
 
 #### `GET /locations`
 
-| Example Request (cURL) |
-| ---------------------- |
+| Example Request (cURL)                                                        |
+| ----------------------------------------------------------------------------- |
 | `curl -Lk -X GET 'localhost:3000/locations' -H 'Authorization: Bearer TOKEN'` |
 
 ##### Example Response (JSON):
@@ -81,8 +83,8 @@ As your task please do the following things:
 
 #### `GET /weather`
 
-| Example Request (cURL) |
-| ---------------------- |
+| Example Request (cURL)                                                      |
+| --------------------------------------------------------------------------- |
 | `curl -Lk -X GET 'localhost:3000/weather' -H 'Authorization: Bearer TOKEN'` |
 
 ##### Example Response (JSON):
@@ -93,8 +95,8 @@ As your task please do the following things:
 
 #### `POST /auth/login`
 
-| Example Request (cURL) |
-| ---------------------- |
+| Example Request (cURL)                                                                                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `curl -Lk -X POST 'localhost:3000/auth/login' -H 'Content-Type: application/json' --data '{"username": "user1","password": "password1"}'` |
 
 ##### Example Response (JSON):
@@ -105,8 +107,8 @@ As your task please do the following things:
 
 #### `POST /location/:id/favorite`
 
-| Example Request (cURL) |
-| ---------------------- |
+| Example Request (cURL)                                                                     |
+| ------------------------------------------------------------------------------------------ |
 | `curl -Lk -X POST 'localhost:3000/location/:id/favorite' -H 'Authorization: Bearer TOKEN'` |
 
 ##### Example Response (JSON):
@@ -118,9 +120,20 @@ As your task please do the following things:
 2. We preffer to see correctly committed code, we will be very sad to see whole task commited as one commit.
 
 3. Please shortly explain why your code is easily testable. You can use an example for this.
+
+- Enviroment for development has been prepared, so changes're updated in real-time. I was tested this work in the Postman.
+
 4. Add es-lint rules and some form of forcing them in code. Why have you decided to implement such rules and why have you chosen such form of enforcing them?
+
+- Most of es-lint rules I used coz of my personal habit (single-quote, semicolons, without commas at the end, curly spacing). I added warnings about use of the console coz sometimes I forget to delete unwanted code and errors when using loops, as there are more cool ways.
+
 5. (Optional) Add possibility to start application in dev(local) mode. In such mode app should not request open weather api for weather but should use some mocked data, stored locally.
    Please describe idea behind this implementation.
+
+   I think the simplest way is to return a predefinied JSON object from the file which is the same as one of the response from the external API.
+
 6. (Optional) Store weather in our database. App should request for weather once every hour and store it in database. Weather returned to user should be fetched from this table. This operation should not be handled by main application thread. It might be child process, worker etc. however, we want the code of origial weather fetch to be reused in this solution.
    Please move this solution to separate branch.
    Please, also describe shortly why you have implemented it like this.
+
+   I used the Bree package for this task (it's job scheduler), so the implementation works without affecting the main application.
