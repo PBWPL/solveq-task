@@ -4,10 +4,27 @@ import { AppDependencies } from './lib/di';
 import { City } from './models/city.model';
 import { User } from './models/user.model';
 import rootRouter from './routes/v1';
+import Bree from 'bree';
+import path from 'path';
 
 function serverFactory(deps: AppDependencies) {
   const { sequelize, config } = deps;
   const app = express();
+
+  const bree = new Bree({
+    logger: false,
+    root: path.join(__dirname, 'jobs'),
+    defaultExtension: process.env.NODE_ENV === 'development' ? 'ts' : 'js',
+    jobs: [
+      {
+        name: 'weather',
+        interval: '1h',
+        timeout: '10s' //run after 10 seconds from the start
+      }
+    ]
+  });
+
+  bree.start();
 
   const port = config.HTTP.port;
 
