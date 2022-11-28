@@ -3,6 +3,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { Config } from '../config/config';
 import { City } from '../models/city.model';
 import { User, UserCity } from '../models/user.model';
+import { Weather } from '../models/weather.model';
 
 export function initDb(config: Config) {
   return mysql.createConnection(config.MYSQL);
@@ -16,6 +17,6 @@ export function initSequelize(config: Config) {
     password: config.MYSQL.password,
     database: config.MYSQL.database,
     logging: false,
-    models: [User, City, UserCity]
+    models: [User, City, UserCity, Weather]
   });
 }

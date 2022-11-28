@@ -1,5 +1,6 @@
-import { Table, Model, Column, DataType, BelongsToMany } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, BelongsToMany, HasOne } from 'sequelize-typescript';
 import { User, UserCity } from './user.model';
+import { Weather } from './weather.model';
 
 @Table({
   timestamps: false,
@@ -27,4 +28,7 @@ export class City extends Model {
 
   @BelongsToMany(() => User, () => UserCity)
   users: User[];
+
+  @HasOne(() => Weather)
+  weather: Weather;
 }

@@ -19,4 +19,6 @@ INSERT INTO `cities` (`name`, `coordinate`) VALUES
 
 CREATE TABLE IF NOT EXISTS `users_cities` (`id` MEDIUMINT NOT NULL AUTO_INCREMENT, `userId` MEDIUMINT NOT NULL, `cityId` MEDIUMINT NOT NULL, KEY `userId` (`userId`), KEY `cityId` (`cityId`), CONSTRAINT `users_cities_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`), CONSTRAINT `users_cities_ibfk_2` FOREIGN KEY (`cityId`) REFERENCES `cities` (`id`), PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE IF NOT EXISTS `weather` (`id` MEDIUMINT NOT NULL AUTO_INCREMENT, `cityId` MEDIUMINT NOT NULL, `rawData` longtext NOT NULL, KEY `cityId` (`cityId`), CONSTRAINT `weather_ibfk_1` FOREIGN KEY (`cityId`) REFERENCES `cities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
